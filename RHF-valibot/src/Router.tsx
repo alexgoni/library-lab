@@ -3,6 +3,7 @@ import UseFormPage from "./pages/use-form";
 import Home from "./pages/home";
 import ControllerPage from "./pages/controller";
 import FormProviderPage from "./pages/form-provider";
+import ValibotPage from "./pages/valibot";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: "form-provider",
         element: <FormProviderPage />,
+      },
+      {
+        path: "valibot",
+        element: <ValibotPage />,
       },
     ],
   },

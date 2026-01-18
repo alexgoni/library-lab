@@ -6,6 +6,7 @@ export default function Home() {
       <Link to="/use-form">1. useForm</Link>
       <Link to="/controller">2. Controller</Link>
       <Link to="/form-provider">3. FormProvider</Link>
+      <Link to="/valibot">4. Valibot</Link>
     </div>
   );
 }
