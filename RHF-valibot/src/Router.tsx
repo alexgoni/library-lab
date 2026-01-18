@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import UseFormPage from "./pages/use-form";
 import Home from "./pages/home";
 import ControllerPage from "./pages/controller";
+import FormProviderPage from "./pages/form-provider";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
       {
         path: "controller",
         element: <ControllerPage />,
+      },
+      {
+        path: "form-provider",
+        element: <FormProviderPage />,
       },
     ],
   },
