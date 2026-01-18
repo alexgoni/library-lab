@@ -2,8 +2,9 @@ import { Link } from "react-router";
 
 export default function Home() {
   return (
-    <>
-      <Link to="/login">1. 기본 RHF</Link>
-    </>
+    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+      <Link to="/use-form">1. useForm</Link>
+      <Link to="/controller">2. Controller</Link>
+    </div>
   );
 }

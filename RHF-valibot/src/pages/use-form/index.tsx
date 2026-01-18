@@ -1,5 +1,5 @@
 /*
-1. 기본 RHF
+1. useForm
 
 register: 필드 등록 / 이벤트 핸들러 주입 / 유효성 검사
 handleSubmit: This function will receive the form data if form validation is successful.
@@ -26,7 +26,7 @@ export default function UseFormPage() {
 
   return (
     <>
-      <h1>로그인</h1>
+      <h1>useForm</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>이메일</label>
