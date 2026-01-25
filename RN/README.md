@@ -16,6 +16,18 @@
 - 모든 텍스트는 반드시 `<Text>` 컴포넌트로 감싸야 함
 - 기본 `display: flex`
 
+## Layout
+
+| `_layout.tsx` must return navigator.
+
+디렉토리 하위의 파일들은 가장 가까운 `_layout.tsx`를 찾고, 해당 navigator에 의해 렌더링된다.
+
+### Stack vs Tab vs Slot
+
+Stack: 수직 이동
+Tab: 수평 이동
+Slot: no navigate, no style, just children
+
 ## Navigation
 
 ### 1. push
