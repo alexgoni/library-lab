@@ -1,4 +1,5 @@
-import { FlatList, Pressable, ScrollView, Text, View } from "react-native";
+import { router } from "expo-router";
+import { FlatList, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const items = Array.from({ length: 30 }, (_, i) => ({
@@ -25,7 +26,8 @@ export default function Test() {
           </View>
         }
         renderItem={({ item }) => (
-          <View
+          <Pressable
+            onPress={() => router.push(`/test/detail/${item.id}`)}
             style={{
               padding: 16,
               borderBottomWidth: 1,
@@ -33,7 +35,7 @@ export default function Test() {
             }}
           >
             <Text>{item.title}</Text>
-          </View>
+          </Pressable>
         )}
       />
     </SafeAreaView>
