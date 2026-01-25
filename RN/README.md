@@ -1,50 +1,50 @@
-# Welcome to your Expo app 👋
+## Styling
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+### RN 기본 컴포넌트 3종
 
-## Get started
+| 웹          | RN          |
+| ----------- | ----------- |
+| `div`       | `View`      |
+| `span`, `p` | `Text`      |
+| `button`    | `Pressable` |
 
-1. Install dependencies
+### 스타일 방식 (Difference with CSS)
 
-   ```bash
-   npm install
-   ```
+- px 단위가 아닌 dp
+- rem / vw / vh / % 사용 불가
+- Flexbox 기본 direction: column
+- 모든 텍스트는 반드시 `<Text>` 컴포넌트로 감싸야 함
+- 기본 `display: flex`
 
-2. Start the app
+## Navigation
 
-   ```bash
-   npx expo start
-   ```
+### 1. push
 
-In the output, you'll find options to open the app in a
+```tsx
+import { router } from "expo-router";
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+router.push("/detail");
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- 이전 화면 남아 있음
+- 뒤로가기 가능
+- 목록 → 상세에 사용
 
-## Learn more
+### 2. replace
 
-To learn more about developing your project with Expo, look at the following resources:
+```tsx
+router.replace("/home");
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```
+A → B → C
 
-## Join the community
+push: A → B → C → D
+replace: A → B → D
+```
 
-Join our community of developers creating universal apps.
+### 3. modal - 위에 띄우는 별도 흐름
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```tsx
+router.push("/modal");
+```
