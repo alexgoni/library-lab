@@ -1,9 +1,5 @@
-import { ResizableTable } from "./ResizableTable";
+import { FilterTable } from "./FilterTable";
 
 export default function App() {
-  return (
-    <>
-      <ResizableTable />
-    </>
-  );
+  return <FilterTable />;
 }
