@@ -1,9 +1,9 @@
-import { BasicTable } from "./BasicTable";
+import { SortableTable } from "./SortableTable";
 
 export default function App() {
   return (
     <>
-      <BasicTable />
+      <SortableTable />
     </>
   );
 }
