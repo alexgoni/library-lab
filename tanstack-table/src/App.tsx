@@ -1,5 +1,5 @@
-import { FilterTable } from "./FilterTable";
+import { PaginationTable } from "./PaginationTable";
 
 export default function App() {
-  return <FilterTable />;
+  return <PaginationTable />;
 }
