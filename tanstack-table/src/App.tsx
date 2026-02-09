@@ -1,9 +1,9 @@
-import { CustomCellTable } from "./CustomCellTable";
+import { ResizableTable } from "./ResizableTable";
 
 export default function App() {
   return (
     <>
-      <CustomCellTable />
+      <ResizableTable />
     </>
   );
 }
