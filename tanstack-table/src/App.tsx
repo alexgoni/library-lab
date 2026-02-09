@@ -1,9 +1,9 @@
-import { SortableTable } from "./SortableTable";
+import { CustomCellTable } from "./CustomCellTable";
 
 export default function App() {
   return (
     <>
-      <SortableTable />
+      <CustomCellTable />
     </>
   );
 }
