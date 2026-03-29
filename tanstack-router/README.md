@@ -1,204 +1,84 @@
-Welcome to your new TanStack Start app! 
+## 특징
 
-# Getting Started
+- 100% 추론된 TypeScript 지원: 모든 경로와 파라미터에서 완벽한 타입 추론을 제공합니다.
+- 타입 안전한 JSON 기반 Search Params 관리 API: 쿼리 스트링을 객체처럼 안전하게 다룹니다.
+- 자동 경로 프리페칭(Prefetching): 사용자가 클릭하기 전에 다음 페이지 데이터를 미리 가져옵니다.
+- 파일 기반 라우트 생성: 파일 구조를 기반으로 라우트를 자동 생성합니다.
 
-To run this application:
+## 큰 흐름
 
-```bash
-npm install
-npm run dev
-```
+프로젝트는 아래 순서로 동작합니다.
 
-# Building For Production
+1. `src/main.tsx`에서 앱을 마운트한다.
+2. 라우터를 생성하고 `RouterProvider`에 연결한다.
+3. `src/routes` 아래 파일들을 기준으로 라우트가 구성된다.
+4. `src/routeTree.gen.ts`가 파일 라우트 정보를 자동 생성한다.
+5. `src/routes/__root.tsx`가 공통 레이아웃 역할을 하고, 각 페이지는 `Outlet` 위치에 렌더링된다.
 
-To build this application for production:
+## 파일별 역할
 
-```bash
-npm run build
-```
+### `src/main.tsx`
 
-## Testing
+애플리케이션 시작점입니다.
 
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
+- DOM의 `#app` 요소를 찾는다
+- 라우터를 생성하거나 가져온다
+- `RouterProvider`로 전체 앱을 감싼다
 
-```bash
-npm run test
-```
+즉, React 앱이 실제로 브라우저에 붙는 진입점입니다.
 
-## Styling
+### `src/router.tsx`
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+TanStack Router 인스턴스를 만드는 파일입니다.
 
-### Removing Tailwind CSS
+- `routeTree`를 연결한다
+- `scrollRestoration` 같은 라우터 옵션을 설정한다
+- 타입 등록을 통해 라우터 타입 안정성을 제공한다
 
-If you prefer not to use Tailwind CSS:
+프로젝트가 커질수록 라우터 관련 설정은 이 파일에서 관리하게 됩니다.
 
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `npm install @tailwindcss/vite tailwindcss -D`
+### `src/routes/__root.tsx`
 
-## Linting & Formatting
+루트 라우트입니다.
 
+- 전체 페이지의 공통 레이아웃 역할
+- `Outlet`을 통해 자식 페이지 렌더링
+- Devtools 같은 전역 UI 연결
 
-This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
+중요한 개념은 `Outlet`입니다. 현재 활성화된 페이지가 이 위치에 들어옵니다.
 
-```bash
-npm run lint
-npm run format
-npm run check
-```
+### `src/routes/index.tsx`
 
+`/` 경로에 해당하는 홈 페이지입니다.
 
+### `src/routes/about.tsx`
 
-## Routing
+`/about` 경로에 해당하는 페이지입니다.
 
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
+- `createFileRoute('/about')`로 경로를 선언
+- 독립된 페이지 컴포넌트를 렌더링
 
-### Adding A Route
+### `src/routeTree.gen.ts`
 
-To add a new route to your application just add a new file in the `./src/routes` directory.
+자동 생성 파일입니다.
 
-TanStack will automatically generate the content of the route file for you.
+- `src/routes`의 파일들을 바탕으로 라우트 트리를 생성
+- 타입 안전한 라우팅을 가능하게 함
+- 직접 수정하면 안 됨
 
-Now that you have two routes you can use a `Link` component to navigate between them.
+## 설정 파일
 
-### Adding Links
+### `vite.config.ts`
 
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
+Vite 설정 파일입니다.
 
-```tsx
-import { Link } from "@tanstack/react-router";
-```
+현재 기준으로 다음 플러그인이 연결되어 있습니다.
 
-Then anywhere in your JSX you can use it like so:
+- React
+- Tailwind CSS
+- TanStack Router Vite 플러그인
+- TanStack Devtools
+- `tsconfig` 경로 별칭 지원
 
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start'
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('')
-  
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-  
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-import { json } from '@tanstack/react-start'
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router'
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people')
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+여기서 중요한 점은 `tanstackRouter({ target: 'react', autoCodeSplitting: true })` 설정이
+파일 기반 라우팅과 자동 코드 분할을 도와준다는 점입니다.
